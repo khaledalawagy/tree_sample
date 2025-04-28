@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
 
@@ -27,7 +26,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(title: Text("Profile")),
 
       body: Column(
@@ -42,15 +40,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   child:
                       selectedImage == null
                           ? Icon(Icons.person, size: 200, color: Colors.white38)
-                          : ClipOval(child: Image.file(
-                        height: 200,
-                          width: 200,
-                          fit: BoxFit.cover,
+                          : ClipOval(
+                            child: Image.file(
+                              height: 200,
+                              width: 200,
+                              fit: BoxFit.cover,
 
-
-
-
-                          selectedImage!)),
+                              selectedImage!,
+                            ),
+                          ),
                 ),
 
                 CircleAvatar(
@@ -100,9 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             if (mounted) {
                                               setState(() {
                                                 selectedImage = null;
-                                              }
-
-                                              );
+                                              });
                                               Navigator.pop(context);
                                             }
                                           },
@@ -111,15 +107,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                     ],
                                   ),
-
                                 ],
-
                               ),
-
                             ),
-
                       );
-
                     },
                     icon: Icon(color: Colors.grey, Icons.camera_alt, size: 35),
                   ),
@@ -127,12 +118,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-
-
-
-
-
-
         ],
       ),
     );
@@ -145,7 +130,7 @@ class Options extends StatelessWidget {
 
   Colors? color;
 
-  File ? selectedImage;
+  File? selectedImage;
 
   VoidCallback onPressed;
 
@@ -163,10 +148,17 @@ class Options extends StatelessWidget {
     return Column(
       children: [
         IconButton(
-            color: selectedImage == null? Colors.grey.shade800 : Colors.red,
+          color: selectedImage == null ? Colors.grey.shade800 : Colors.red,
 
-            onPressed: onPressed, icon: Icon(icon)),
-        Text(title, style: TextStyle(color: selectedImage == null? Colors.grey.shade800 :Colors.red),),
+          onPressed: onPressed,
+          icon: Icon(icon),
+        ),
+        Text(
+          title,
+          style: TextStyle(
+            color: selectedImage == null ? Colors.grey.shade800 : Colors.red,
+          ),
+        ),
       ],
     );
   }
