@@ -6,11 +6,13 @@ import 'package:flutter_application_2/home/home_widget/season.dart';
 import 'package:flutter_application_2/profile/profile_page/profile_page.dart';
 
 // import 'package:flutter_application_2/';
+
 class MyHomePage extends StatelessWidget {
   final String? title;
   final String? body;
   final List<File>? image;
-  const MyHomePage({this.image, this.title, this.body, super.key});
+
+  const MyHomePage({this.title, this.body, this.image, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,47 +30,53 @@ class MyHomePage extends StatelessWidget {
           ),
         ],
         centerTitle: true,
-        title: Text("the ${title ?? "Tree"}"),
+        title: Text("The ${title ?? "Tree"}"),
       ),
+
       body: SingleChildScrollView(
-        // Fixed incorrect usage
         child: Column(
           children: [
             image == null || image!.isEmpty
                 ? Image.asset("assets/tree.jpg")
                 : Image.file(
-                  height: 300,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
                   image![0],
+                  height: 300,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
                 ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
+
               children: [
-                const FavoriteWidget(),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
+                FavoriteWidget(),
+                IconButton(onPressed: () {}, icon: Icon(Icons.share)),
               ],
             ),
+
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                body ?? "fjldljgdhgjljdhlhlghgldhfdhgfd",
                 textAlign: TextAlign.justify,
+                body ??
+                    "Plants and flowers play a crucial role in nature, as they produce oxygen that sustains life for most organisms on Earth. They also absorb carbon dioxide, helping to maintain the planet’s balance and improve air quality. Flowers add beauty to the environment and support pollinators like bees and butterflies, which are vital for ecosystems. Additionally, many plants provide food, medicine, and materials that humans and animals rely on for survival.",
               ),
             ),
+
             image == null || image!.isEmpty
                 ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const MySeasone(
+                    const MySeason(
                       url: "assets/tree_spring.jpg",
                       text: "Spring",
                     ),
-                    const MySeasone(url: "assets/tree_fall.jpg", text: "Fall"),
+                    const MySeason(url: "assets/tree_fall.jpg", text: "Fall"),
                   ],
                 )
                 : SizedBox(
                   height: 500,
+
                   child: GridView.builder(
                     itemCount: image!.length,
                     itemBuilder:
@@ -78,6 +86,7 @@ class MyHomePage extends StatelessWidget {
                           width: 200,
                           fit: BoxFit.cover,
                         ),
+
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 10,
@@ -88,6 +97,7 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -95,12 +105,11 @@ class MyHomePage extends StatelessWidget {
             MaterialPageRoute(builder: (context) => FirstScreen()),
           );
         },
-        child: const Icon(Icons.next_plan),
+        child: Icon(Icons.next_plan),
       ),
     );
   }
 }
-
 // class MySeasone extends StatelessWidget {
 //   final String url;
 //   final String text;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class FavoriteWidget extends StatefulWidget {
   const FavoriteWidget({super.key});
 
@@ -18,7 +19,7 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
           click = !click;
         });
       },
-      icon: Icon(Icons.favorite, color: click ? Colors.red : Colors.grey),
+      icon: Icon(Icons.favorite, color: click ? Colors.redAccent : Colors.grey),
     );
   }
 }
