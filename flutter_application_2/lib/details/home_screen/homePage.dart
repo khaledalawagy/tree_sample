@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/first_screen.dart';
-import 'package:flutter_application_2/home/home_widget/favorite.dart';
-import 'package:flutter_application_2/home/home_widget/season.dart';
+import 'package:flutter_application_2/add_item/add_item_screen.dart';
+import 'package:flutter_application_2/details/details_widget/favorite.dart';
+import 'package:flutter_application_2/details/details_widget/season.dart';
 import 'package:flutter_application_2/profile/profile_page/profile_page.dart';
-
-// import 'package:flutter_application_2/';
+import 'package:flutter_application_2/profile/user_model.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatelessWidget {
   final String? title;
@@ -16,6 +16,9 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userModel = Provider.of<UserModel>(context);
+    final profileImage = userModel.user?.image;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -26,34 +29,41 @@ class MyHomePage extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => ProfilePage()),
               );
             },
-            icon: Icon(Icons.account_box),
+            icon:
+                profileImage == null
+                    ? Icon(Icons.account_box)
+                    : CircleAvatar(
+                      backgroundImage: FileImage(profileImage),
+                      radius: 20,
+                    ),
           ),
         ],
         centerTitle: true,
         title: Text("The ${title ?? "Tree"}"),
       ),
-
       body: SingleChildScrollView(
         child: Column(
           children: [
             image == null || image!.isEmpty
-                ? Image.asset("assets/tree.jpg")
+                ? Image.asset(
+                  "assets/tree.jpg",
+                  height: 300,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                )
                 : Image.file(
                   image![0],
                   height: 300,
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-
               children: [
                 FavoriteWidget(),
                 IconButton(onPressed: () {}, icon: Icon(Icons.share)),
               ],
             ),
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -62,7 +72,6 @@ class MyHomePage extends StatelessWidget {
                     "Plants and flowers play a crucial role in nature, as they produce oxygen that sustains life for most organisms on Earth. They also absorb carbon dioxide, helping to maintain the planet’s balance and improve air quality. Flowers add beauty to the environment and support pollinators like bees and butterflies, which are vital for ecosystems. Additionally, many plants provide food, medicine, and materials that humans and animals rely on for survival.",
               ),
             ),
-
             image == null || image!.isEmpty
                 ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -76,8 +85,8 @@ class MyHomePage extends StatelessWidget {
                 )
                 : SizedBox(
                   height: 500,
-
                   child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: image!.length,
                     itemBuilder:
                         (context, index) => Image.file(
@@ -86,7 +95,6 @@ class MyHomePage extends StatelessWidget {
                           width: 200,
                           fit: BoxFit.cover,
                         ),
-
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 10,
@@ -97,12 +105,11 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => FirstScreen()),
+            MaterialPageRoute(builder: (context) => addItemScreen()),
           );
         },
         child: Icon(Icons.next_plan),
@@ -110,42 +117,3 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
-// class MySeasone extends StatelessWidget {
-//   final String url;
-//   final String text;
-//   const MySeasone({required this.url, required this.text, super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Stack(
-//       alignment: Alignment.bottomCenter,
-//       children: [
-//         Image.asset(url, height: 125, width: 125, fit: BoxFit.cover),
-//         Text(text, style: const TextStyle(color: Colors.white, fontSize: 25)),
-//       ],
-//     );
-//   }
-// }
-
-// class FavoriteWidget extends StatefulWidget {
-//   const FavoriteWidget({super.key});
-
-//   @override
-//   State<FavoriteWidget> createState() => _FavoriteWidgetState();
-// }
-
-// class _FavoriteWidgetState extends State<FavoriteWidget> {
-//   bool click = false;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return IconButton(
-//       onPressed: () {
-//         setState(() {
-//           click = !click;
-//         });
-//       },
-//       icon: Icon(Icons.favorite, color: click ? Colors.red : Colors.grey),
-//     );
-//   }
-// }
